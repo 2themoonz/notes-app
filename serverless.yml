@@ -1,0 +1,23 @@
+service: notes-app
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+package:
+  individually: true
+
+custom:
+  forceExclude:
+    - "@aws-sdk/client-dynamodb"
+
+plugins:
+  - serverless-bundle
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+functions:
+  hello:
+    handler: handler.hello
