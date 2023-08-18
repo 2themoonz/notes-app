@@ -22,12 +22,12 @@ provider:
   environment:
     tableName: notes
   iam:
-  role:
-    statements:
-      - Effect: Allow
-        Action:
-          - dynamodb:*
-        Resource: "*"
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:*
+          Resource: "*"
 
 functions:
   create:
@@ -42,5 +42,12 @@ functions:
     events:
       - http:
           path: /notes/{id}
+          cors: true
+          method: GET
+  list:
+    handler: services/functions/list.main
+    events:
+      - http:
+          path: /notes
           cors: true
           method: GET
