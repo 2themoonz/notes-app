@@ -51,3 +51,10 @@ functions:
           path: /notes
           cors: true
           method: GET
+  update:
+    handler: update.main
+    events:
+      - http:
+          path: /notes/{id}
+          cors: true
+          method: PUT
