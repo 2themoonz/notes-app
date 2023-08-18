@@ -21,8 +21,7 @@ provider:
   region: ap-southeast-1
   environment:
     tableName: notes
-
-iam:
+  iam:
   role:
     statements:
       - Effect: Allow
