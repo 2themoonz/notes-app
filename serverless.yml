@@ -2,22 +2,39 @@ service: notes-app
 
 frameworkVersion: "3"
 
-provider:
-  name: aws
-  runtime: nodejs18.x
-
 package:
   individually: true
 
 custom:
   forceExclude:
-    - "@aws-sdk/client-dynamodb"
+    - "aws-sdk"
 
 plugins:
   - serverless-bundle
   - serverless-offline
   - serverless-dotenv-plugin
 
+provider:
+  name: aws
+  runtime: nodejs16.x
+  stage: prod
+  region: ap-southeast-1
+  environment:
+    tableName: notes
+
+iam:
+  role:
+    statements:
+      - Effect: Allow
+        Action:
+          - dynamodb:*
+        Resource: "*"
+
 functions:
-  hello:
-    handler: handler.hello
+  create:
+    handler: create.main
+    events:
+      - http:
+          path: /notes
+          cors: true
+          method: POST
