@@ -58,3 +58,10 @@ functions:
           path: /notes/{id}
           cors: true
           method: PUT
+  delete:
+    handler: delete.main
+    events:
+      - http:
+          path: /notes/{id}
+          cors: true
+          method: DELETE
