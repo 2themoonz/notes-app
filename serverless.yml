@@ -21,7 +21,7 @@ provider:
   region: ap-southeast-1
   environment:
     tableName: notes
-    stripeSecretKey: ${env:STRIPE_SECRET_KEY}
+    stripeSecretKey: "sk_test_51NfN1yBfwMjAXQQVMoBDMdBczN7FGFvzWDdci2uHfgUrzbtruHsHmwE0eJ9XVlBaOeyY5Id5DIjIcMqC9KE6m3Ms004xxinCh2"
   iam:
     role:
       statements:

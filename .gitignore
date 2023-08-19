@@ -11,4 +11,4 @@ jspm_packages
 logs
 
 # Env
-.env
+# .env
