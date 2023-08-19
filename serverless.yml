@@ -8,6 +8,11 @@ package:
 custom:
   forceExclude:
     - "aws-sdk"
+  # Our stage is based on what is passed in when running serverless
+  # commands. Or fallsback to what we have set in the provider section.
+  stage: ${opt:stage, self:provider.stage}
+  # Set the table name here so we can use it while testing locally
+  tableName: ${self:custom.stage}-notes
 
 plugins:
   - serverless-bundle
@@ -20,7 +25,7 @@ provider:
   stage: prod
   region: ap-southeast-1
   environment:
-    tableName: notes
+    tableName: ${self:custom.tableName}
     stripeSecretKey: "sk_test_51NfN1yBfwMjAXQQVMoBDMdBczN7FGFvzWDdci2uHfgUrzbtruHsHmwE0eJ9XVlBaOeyY5Id5DIjIcMqC9KE6m3Ms004xxinCh2"
   iam:
     role:
@@ -28,7 +33,11 @@ provider:
         - Effect: Allow
           Action:
             - dynamodb:*
-          Resource: "*"
+          Resource: - "Fn::GetAtt": [ NotesTable, Arn ]
+
+resources:
+  # DynamoDB
+  - ${file(resources/dynamodb-table.yml)}
 
 functions:
   create:
