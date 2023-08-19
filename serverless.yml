@@ -21,6 +21,7 @@ provider:
   region: ap-southeast-1
   environment:
     tableName: notes
+    stripeSecretKey: ${env:STRIPE_SECRET_KEY}
   iam:
     role:
       statements:
@@ -69,4 +70,12 @@ functions:
           path: /notes/{id}
           cors: true
           method: DELETE
+          authorizer: aws_iam
+  billing:
+    handler: billing.main
+    events:
+      - http:
+          path: /billing
+          cors: true
+          method: POST
           authorizer: aws_iam
